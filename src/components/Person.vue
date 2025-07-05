@@ -24,22 +24,27 @@ export default {
 </script> -->
 <!-- 使用vite-plugin-vue-setup-extend插件 -->
 <script setup name="Person">
+    import { ref } from 'vue'
     console.log('setup函数被调用了', this)
     // Composition API setup function
     // 可以在这里定义响应式数据和方法
-    let name = '张三'
-    let age = 18
+    let name = ref('张三')
+    let age = ref(18)
     let tel = 15555551234
     let address = '北京市海淀区'
+    console.log('name:', name)
+    console.log('age:', age)
+    console.log('tel:', tel)
+    console.log('address:', address)
 
     function changeName() {
       console.log('changeName函数被调用了')
-      name = 'zhang-san' // 这里的name是一个普通变量，不是响应式的
+      name.value = 'zhang-san' // 这里的name是一个普通变量，不是响应式的
       console.log('name:', name)
     }
     function changeAge() {
       console.log('changeAge函数被调用了')
-      age += 1
+      age.value += 1
       console.log('age:', age)
     }
     function showTel() {
