@@ -2,13 +2,17 @@
   <div class="person">
     <h2>姓名!!!:{{ name }}</h2>
     <h2>年龄:{{ age }}</h2>
+    <h2>地址:{{ address }}</h2>
     <button @click="changeName">修改名字</button>
     <button @click="changeAge">修改年龄</button>
     <button @click="showTel">查看联系方式</button>
   </div>
 </template>
 
+<!-- 
+//不使用vite-plugin-vue-setup-extend插件
 <script>
+import { Script } from 'vm'
 export default {
   name: 'Person',
   beforeCreate() {
@@ -16,13 +20,17 @@ export default {
     // Options API beforeCreate hook
     // 可以在这里进行一些初始化操作
   },
-  setup() {
+}
+</script> -->
+<!-- 使用vite-plugin-vue-setup-extend插件 -->
+<script setup name="Person">
     console.log('setup函数被调用了', this)
     // Composition API setup function
     // 可以在这里定义响应式数据和方法
     let name = '张三'
     let age = 18
     let tel = 15555551234
+    let address = '北京市海淀区'
 
     function changeName() {
       console.log('changeName函数被调用了')
@@ -38,23 +46,7 @@ export default {
       console.log('showTel函数被调用了')
       alert(tel)
     }
-    // return {
-    //   name,
-    //   age,
-    //   tel,
-    //   changeName,
-    //   changeAge,
-    //   showTel,
-    // }
-
-    // return  function(){
-    //   return "哈哈"
-    // }
-    return () => '哈哈'
-  },
-}
 </script>
-
 <style>
 .person {
   background-color: rgb(149, 79, 44);
