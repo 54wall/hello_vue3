@@ -11,23 +11,42 @@
 <script>
 export default {
   name: 'Person',
-  data() {
-    return {
-      name: '张三',
-      age: 18,
-      tel: 15555551234,
+  beforeCreate() {
+    console.log('beforeCreate函数被调用了',this)
+    // Options API beforeCreate hook
+    // 可以在这里进行一些初始化操作
+  }, 
+  setup() {
+    console.log('setup函数被调用了',this)
+    // Composition API setup function
+    // 可以在这里定义响应式数据和方法
+    let name = '张三'
+    let age = 18  
+    let tel = 15555551234
+
+    function changeName() {
+      console.log('changeName函数被调用了')
+      name = 'zhang-san'  // 这里的name是一个普通变量，不是响应式的
+      console.log('name:', name)
+    } 
+    function changeAge() {
+      console.log('changeAge函数被调用了')
+      age += 1    
+      console.log('age:', age)
     }
-  },
-  methods: {
-    changeName() {
-      this.name = 'zhang-san'
-    },
-    changeAge() {
-      this.age += 1
-    },
-    showTel() {
-      alert(this.tel)
-    },
+    function showTel() {
+      console.log('showTel函数被调用了')
+      alert(tel)
+    } 
+    return {
+      name,
+      age,
+      tel,  
+      changeName,
+      changeAge,
+      showTel,
+    }
+
   },
 }
 </script>
