@@ -1,42 +1,69 @@
 <template>
   <div class="person">
-    <h2>姓名：{{ name }}</h2>
-    <h2>年龄：{{ person.age }},{{nl}}</h2>
-    <h2>联系方式：{{ person.tel }}</h2>
-    <h2>地址：{{ person.address }}</h2>
-    <button @click="changeName">修改名字</button>
-    <button @click="changeAge">修改年龄</button>
+    姓：<input type="text" value="firstName" /> <br />
+    <!-- 非双向 -->
+     非双向<br />
+    姓：<input type="text" v-bind:value="firstName" /> <br />
+    姓：<input type="text" :value="firstName" /> <br />
+    <br />
+    双向
+    <br>
+    <!-- 双向 -->
+    姓：<input type="text" v-model="firstName" /> <br />
+    名：<input type="text" v-model="lastName" /> <br />
+    <button @click="changeFullName">修改全名</button> <br />
+    fullName全名：<span>{{ fullName }}</span> <br />
+    fullName全名：<span>{{ fullName }}</span> <br />
+    fullName全名：<span>{{ fullName }}</span> <br />
+    <br />
+    fullName2()全名：<span>{{ fullName2() }}</span> <br />
+    fullName2()全名：<span>{{ fullName2() }}</span> <br />
+    fullName2()全名：<span>{{ fullName2() }}</span> <br />
+    <br />
+    <!--  -->
+    fullName3 全名：<span>{{ fullName3 }}</span> <br />
+
+    <button @click="changeFullName3">修改全名</button> <br />
   </div>
 </template>
 
 <script setup name="Person">
-import { reactive, toRefs, toRef } from 'vue'
-let person = reactive({
-  name: '张三',
-  age: 18,
-  tel: 15555551234,
-  address: '北京市海淀区',
+// import { get } from 'http'
+import { ref, computed } from 'vue'
+let firstName = ref('zhang')
+let lastName = ref('san')
+//fullname是一个计算属性，且是只读的
+// let fullName = computed(() => {
+//   console.log('let fullName 被调用')
+//   return firstName.value.slice(0, 1).toUpperCase() + firstName.value.slice(1) + lastName.value
+// })
+//定义的fullname是一个计算属性，可读可写
+let fullName = computed({
+  get() {
+    return firstName.value.slice(0, 1).toUpperCase() + firstName.value.slice(1) + lastName.value
+  },
+  set(val) {
+    const[str1,str2] = val.split('-')
+    firstName.value = str1
+    lastName.value = str2
+  },
 })
 
-let { name, age, tel, address } = toRefs(person)
-let nl = toRef(person, 'age')
-console.log('nl.value:', nl.value)
-
-console.log('person:', person)
-console.log('name:', name)
-console.log('age:', age)
-
-function changeName() {
-  console.log('changeName函数被调用了')
-  name.value += '~'
-  console.log('person.name:', person.name)
-  console.log('name:', name)
+function fullName2() {
+  console.log('function fullName2()被调用')
+  return firstName.value.slice(0, 1).toUpperCase() + firstName.value.slice(1) + lastName.value
 }
-function changeAge() {
-  console.log('changeAge函数被调用了')
-  age.value += 1
-  console.log('age:', age)
+
+function changeFullName() {
+  console.log('changeFullName()被调用')
+  fullName.value = 'li-si'
 }
+
+function changeFullName3() {
+  console.log('changeFullName3()被调用')
+  fullName.value = 'li-si'
+}
+
 </script>
 
 <style>
